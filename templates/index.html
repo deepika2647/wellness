@@ -1,0 +1,463 @@
+<head>
+
+<meta name="HandheldFriendly" content="true" />
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employees Health Monitor</title>
+
+
+
+
+</head>
+
+
+<body onload="employee()">
+
+<style type="text/css">
+
+body {
+background-image: url("https://1.bp.blogspot.com/-SiPXwOavnFE/YCcyY3_Jm6I/AAAAAAAAAH4/YO0Ko3Igj8MmF70vqK2fM-2sHhNtW7gYACLcBGAsYHQ/s2048/di-maitland-lLDFfJ4caAU-unsplash.jpg");
+height: 100%;
+ background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+
+
+}
+
+
+#myInput {
+  background-image: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698956-icon-111-search-512.png'); /* Add a search icon to input */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 80%; /* Full-width */
+  font-size: 1em; /* Increase font-size */
+  padding: 10px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+
+#myTable {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#myTable td, #myTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#myTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#myTable tr:hover {background-color: #ddd;}
+
+#myTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+#send_mail_btn {
+position:absolute;
+right:10px;
+top:10px;
+color:white;
+background:blue;
+}
+
+#start {
+position:absolute;
+top:20%;
+left:50%;
+font-size:3em;
+padding:1em;
+border-radius:1em;
+background:green;
+color:white;
+
+}
+
+#blockchain {
+width:100%;
+height:400px;
+font-size:0.7em;
+}
+
+</style>
+
+<center><button id="start" onclick="JavaScript:document.getElementById('data').style.display='block';this.style.display='none'"><b>START</b></button></center>
+
+
+<div id="data" style="display:none" >
+<label>Refresh Delay: </label><input type="number" placeholder="Refresh delay in seconds" id="refresh_delay" value="5"><button onclick="refresh()">Set</button>
+<button id="stop" onclick="refresh_stop()">Stop</button>
+<button onclick="blockchain_log()">Show Log</button>
+<button onclick="send_mail()" id="send_mail_btn">Send mail</button>
+<br>
+<input type="text" id="myInput" onkeyup="search_fun()" placeholder="🔍 Search for names..">
+<br><br>
+<table id="myTable"><tr>
+<th onclick="s(0)">Name</th>
+<th onclick="s(1)">Temperature</th>
+<th onclick="s(2)">Sugar</th>
+<th onclick="s(3)">Oxygen</th>
+<th onclick="s(4)">Heart Beats</th>
+<th onclick="s(5)">Respiration</th>
+<th onclick="s(6)">Results</th></tr>
+</table>
+<br><br>
+<center>
+</center>
+<div id="mail_result"></div>
+<textarea id="blockchain" style="display:none" wrap="off"></textarea>
+
+</div>
+
+<script>
+function search_fun() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+
+<script type="text/javascript">
+
+
+function blockchain_log() {
+if(document.getElementById('blockchain').style.display!='block'){
+document.getElementById('blockchain').style.display='block';
+}else{
+document.getElementById('blockchain').style.display="none";
+}
+}
+
+
+
+var i=0;
+var emp_ind=0;
+emp_name=["Deepika","Arun","Sharu","Ram","Aarthi","Vijay","Thamizh","Hema","Sai","Janaki"]
+function analys(item, index) {
+if(emp_ind>emp_name.length-1){
+emp_ind=0;
+}
+var x=item;
+var j=1;
+// Find a <table> element with id="myTable":
+var table = document.getElementById("myTable");
+
+var tableHeaderRowCount = emp_name.length;
+var table = document.getElementById('myTable');
+var rowCount = table.rows.length;
+for (var i = tableHeaderRowCount; i < rowCount; i++) {
+    table.deleteRow(tableHeaderRowCount);
+}
+
+
+// Create an empty <tr> element and add it to the 1st position of the table:
+var row = table.insertRow(1);
+
+// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+var cell1 = row.insertCell(0);
+var cell2 = row.insertCell(1);
+var cell3 = row.insertCell(2);
+var cell4 = row.insertCell(3);
+var cell5 = row.insertCell(4);
+var cell6 = row.insertCell(5);
+var cell7 = row.insertCell(6);
+// Add some text to the new cells:
+cell1.innerHTML = emp_name[emp_ind++];
+
+prob=""
+//temp 96 99
+if(x[0]<100 && x[0]>95) {
+cell2.innerHTML=x[0]+"°F";
+} else {
+cell2.innerHTML="<div style='color:red'>"+x[0]+"°F</div>";
+if(x[0]<96){
+prob+="Low temperature, "
+}else{
+prob+="High temperature, "
+}
+}
+//sugar 140
+if(x[1]<140) {
+cell3.innerHTML=x[1]+" mg/dL";
+} else {
+cell3.innerHTML="<div style='color:red'>"+x[1]+"mg/dL</div>";
+if(x[1]<200){
+prob+="Diabetes, "
+}else{
+prob+="Prediabetes, "
+}
+
+}
+//oxygen >95
+if(x[2]>95) {
+cell4.innerHTML=x[2]+"%";
+} else {
+cell4.innerHTML="<div style='color:red'>"+x[2]+"%</div>";
+if(x[2]<96){
+prob+="Low oxygen.. leads to hypoxemia, "
+}else{
+prob+="low oxygen, "
+}
+
+
+}
+//beat 80 120
+if(x[3]<121 && x[3]>79) {
+cell5.innerHTML=x[3]+"/minute";
+} else {
+cell5.innerHTML="<div style='color:red'>"+x[3]+"/minute</div>";
+if(x[3]>120){
+prob+="Hypertension, "
+}else{
+prob+="Hypotension, "
+}
+
+}
+//breath 20 30
+if(x[4]<31 && x[4]>19) {
+cell6.innerHTML=x[4]+"/minute";
+} else {
+cell6.innerHTML="<div style='color:red'>"+x[4]+"/minute</div>";
+if(x[4]<20){
+prob+="Bradypnea, "
+}else{
+prob+="tachypnea, "
+}
+
+}
+cell7.innerHTML=prob;
+
+
+}
+
+
+</script>
+
+
+
+<script type="text/javascript">
+
+
+function s(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("myTable");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+
+
+</script>
+
+
+<script type="text/javascript">
+var hsh={};
+function employee() {
+
+var username="u"//document.getElementById("username").value;
+var pass="p"//document.getElementById("password").value;
+
+var fd = new FormData();
+ 
+  // These extra params aren't necessary but show that you can include other data.
+  fd.append("username", username);
+  fd.append("password", pass);
+  
+  
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://192.168.43.1:5000/employee/all', true);
+  
+  xhr.upload.onprogress = function(e) {
+    if (e.lengthComputable) {
+      var percentComplete = (e.loaded / e.total) * 100;
+      console.log(percentComplete + '% uploaded');
+    }
+  };
+
+  xhr.onload = function() {
+    if (xhr.status == 200) {
+      var resp = xhr.responseText;
+      resp=JSON.parse(resp);
+    
+      var data=resp.data;
+      var previous=hsh.current;
+      hsh.current=resp.current_hash;
+      var received_previous=resp.previous_hash;
+      var blockchain_log="Time: "+resp.time+"\r\nData: "+resp.data+"\r\nPrevious Hash: "+resp.previous_hash+"\r\nCurrent Hash: "+resp.current_hash;
+      document.getElementById("blockchain").value+=blockchain_log+"\r\n\n"
+      if((previous==received_previous) || (previous==undefined)){
+           
+      
+      
+          if(data) {
+          data.forEach(analys);
+          } else {
+          alert("Something went wrong");
+          }
+      }else{
+        alert("Hash Not Matching: "+previous+" "+received_previous);
+        return;
+        
+      }
+        };
+  };
+
+  xhr.send(fd);
+
+
+
+}
+
+</script>
+
+
+<script type="text/javascript">
+function send_mail() {
+var emp_name=["Deepika","Arun","Sharu","Ram","Aarthi","Vijay","Thamizh","Hema","Sai","Janaki"];
+var emp_mail=["deepika02042000@gmail.com","","","ramkumarg1605@gmail.com","","","","","",""]
+s(0);
+emp_mail.forEach(snd);
+alert("Mails sended");
+
+function snd(item, index) {
+if(item){
+
+for(var ii=0;ii<emp_name.length;ii++){
+var x = document.getElementById("myTable").rows[ii].cells;
+if(x[0].innerHTML == emp_name[index]) {
+
+
+var mail_body="<br>Dear "+x[0].innerHTML;
+var mail_body=mail_body+"<br><br>Temperature: "+x[1].innerHTML;
+var mail_body=mail_body+"<br>Sugar level: "+x[2].innerHTML;
+var mail_body=mail_body+"<br>Oxygen level: "+x[3].innerHTML;
+var mail_body=mail_body+"<br>Heart beats per minute: "+x[4].innerHTML;
+var mail_body=mail_body+"<br>Breaths per minute: "+x[5].innerHTML;
+var mail_body=mail_body+"<br><br>Results: "+x[6].innerHTML;
+
+var to_mail=item;
+var from="xxxyyyzzz@gmail.com";
+
+var info = "from="+from+"&name=xxx&to="+to_mail+"&message="+mail_body+"&subject=Wellness_Results";
+var send=item;
+send = new XMLHttpRequest();
+send.onreadystatechange = function() {
+
+  if (send.readyState == 4 && send.status == 200) {
+   var result = send.responseText;
+  
+   
+   var mail_res = document.getElementById("mail_result");
+   mail_res.innerHTML = mail_res.innerHTML + result +"<br>";
+  
+  }
+};
+send.open("POST", "http://cyraids.000webhostapp.com/test/send-mail.php", true);
+send.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+send.send(info);
+
+
+
+
+
+
+}
+}
+
+}
+}
+}
+</script>
+
+<script type="text/javascript">
+
+var ref={};
+function refresh() {
+
+var delay=document.getElementById("refresh_delay").value;
+ ref.myVar = setInterval(employee, delay*1000);
+
+
+}
+function refresh_stop(){
+clearInterval(ref.myVar);
+
+}
+
+
+
+</script>
+
+</body>
