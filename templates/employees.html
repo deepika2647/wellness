@@ -1,0 +1,430 @@
+<head>
+
+<meta name="HandheldFriendly" content="true" />
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employees Health Monitor</title>
+
+
+
+
+</head>
+
+
+<body>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyCHM6Z2MuzdYAk6Uk8QQiKviz6NOD_O_Ak",
+    authDomain: "inframind-a86a1.firebaseapp.com",
+    projectId: "inframind-a86a1",
+    storageBucket: "inframind-a86a1.appspot.com",
+    messagingSenderId: "866653508123",
+    appId: "1:866653508123:web:00fe70007ef3201529debe",
+    measurementId: "G-PXFP325E7R"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+<script type="text/javascript">
+
+function writedata(name,data) {
+var emp_name={x001:"Deepika",x002:"Arun",x003:"Sharu",x004:"Ram",x005:"Aarthi",x006:"Vijay",x007:"Thamizh",x008:"Hema",x009:"Sai",x010:"Janaki"}
+var emp=emp_name[document.getElementById("username").value]
+var name=name+"_"+emp;
+firebase.database().ref(name).set(data);
+
+}
+
+
+</script>
+
+
+<style type="text/css">
+
+body {
+background-image: url("https://1.bp.blogspot.com/-SiPXwOavnFE/YCcyY3_Jm6I/AAAAAAAAAH4/YO0Ko3Igj8MmF70vqK2fM-2sHhNtW7gYACLcBGAsYHQ/s2048/di-maitland-lLDFfJ4caAU-unsplash.jpg");
+height: 100%;
+ background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+
+
+}
+
+
+#myInput {
+  background-image: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698956-icon-111-search-512.png'); /* Add a search icon to input */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 80%; /* Full-width */
+  font-size: 1em; /* Increase font-size */
+  padding: 10px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+
+#myTable {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#myTable td, #myTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#myTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#myTable tr:hover {background-color: #ddd;}
+
+#myTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+#send_mail_btn {
+position:absolute;
+right:10px;
+top:10px;
+color:white;
+background:blue;
+}
+label {
+font-size:1.2em;
+padding:5px;
+margin:10px;
+
+}
+
+input {
+width:80%;
+display:block;
+margin:auto;
+font-size:1em;
+padding:10px;
+border-radius:5px;
+border:1px solid gray;
+margin-top:10px;
+}
+#start {
+border:none;
+margin:1em;
+font-size:1em;
+padding:0.5em;
+border-radius:1em;
+background:green;
+color:white;
+width:30%;
+}
+
+#blockchain {
+
+top:15%;
+position:absolute;
+left:10%;
+width:80%;
+height:70%;
+font-size:0.7em;
+box-shadow: 40px 40px 60px #888, -40px -40px 60px #888;
+
+}
+
+
+#first {
+margin-top:20%;
+position:fixed;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:5;
+}
+#second, #third {
+position:relative;
+}
+#second {
+height:100%;
+}
+
+#third textarea {
+height:200px;
+width:80%;
+
+}
+#third button {
+width:80%;
+padding:10px;
+background:green;
+color:white;
+margin-bottom:100px;
+}
+
+
+#profile {
+width:100px;
+height:100px;
+margin:50px;
+border-radius:50px;
+}
+
+
+
+
+
+
+
+
+
+
+</style>
+
+<div id="first" style="display:block">
+<label>User ID</label><br>
+<input id="username" placeholder="x001" value="" ><br>
+<label>IP : Port</label><br>
+<input id="address" placeholder="127.0.0.1:5000" value="" ><br>
+<center><button id="start" onclick="refresh()"><b>START</b></button></center>
+</div>
+
+<div id="second" style="display:none" >
+<a href="#" onclick="JavaScript:document.getElementById('blockchain').style.display='block';document.getElementById('blockchain').focus();">show log</a>
+<center><img id="profile" src="" alt="profile" ></center>
+<table id="myTable">
+<tr><th>Name</th><th></th></tr>
+<tr><td>Temperature</td><td></td></tr>
+<tr><td>Sugar</td><td></td></tr>
+<tr><td>Oxygen</td><td></td></tr>
+<tr><td>Heart Beats</td><td></td></tr>
+<tr><td>Respiration</td><td></td></tr>
+<tr><td>Results</td><td></td></tr>
+</table>
+</div>
+
+<br><br>
+<center>
+
+<div id="third" style="display:none" >
+<textarea id="userdata" style="display:block"></textarea>
+<button onclick="userdata()">submit</button>
+</center>
+</div>
+
+
+<div id="forth">
+<center><textarea style="display:none"  id="blockchain" wrap="off" readonly="readonly"  onblur="JavaScript:this.style.display='none'"></textarea></center>
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+function userdata() {
+var userdata={user_data:document.getElementById("userdata").value};
+writedata(document.getElementById("username").value,userdata);
+employee();
+alert("Submitted");
+
+}
+
+function analys(item) {
+var emp_name={x001:"Deepika",x002:"Arun",x003:"Sharu",x004:"Ram",x005:"Aarthi",x006:"Vijay",x007:"Thamizh",x008:"Hema",x009:"Sai",x010:"Janaki"}
+var x=item;
+// Find a <table> element with id="myTable":
+var table = document.getElementById("myTable");
+
+cell1=table.rows[0].cells[1];
+cell2=table.rows[1].cells[1];
+cell3=table.rows[2].cells[1];
+cell4=table.rows[3].cells[1];
+cell5=table.rows[4].cells[1];
+cell6=table.rows[5].cells[1];
+cell7=table.rows[6].cells[1];
+
+
+
+cell1.innerHTML=emp_name[document.getElementById("username").value];
+prob=""
+//temp 96 99
+if(x[0]<100 && x[0]>95) {
+cell2.innerHTML=x[0]+"°F";
+} else {
+cell2.innerHTML="<div style='color:red'>"+x[0]+"°F</div>";
+if(x[0]<96){
+prob+="Low temperature, "
+}else{
+prob+="High temperature, "
+}
+}
+//sugar 140
+if(x[1]<140) {
+cell3.innerHTML=x[1]+" mg/dL";
+} else {
+cell3.innerHTML="<div style='color:red'>"+x[1]+"mg/dL</div>";
+if(x[1]<200){
+prob+="Diabetes, "
+}else{
+prob+="Prediabetes, "
+}
+
+}
+//oxygen >95
+if(x[2]>95) {
+cell4.innerHTML=x[2]+"%";
+} else {
+cell4.innerHTML="<div style='color:red'>"+x[2]+"%</div>";
+if(x[2]<96){
+prob+="Low oxygen.. leads to hypoxemia, "
+}else{
+prob+="low oxygen, "
+}
+
+
+}
+//beat 80 120
+if(x[3]<121 && x[3]>79) {
+cell5.innerHTML=x[3]+"/minute";
+} else {
+cell5.innerHTML="<div style='color:red'>"+x[3]+"/minute</div>";
+if(x[3]>120){
+prob+="Hypertension, "
+}else{
+prob+="Hypotension, "
+}
+
+}
+//breath 20 30
+if(x[4]<31 && x[4]>19) {
+cell6.innerHTML=x[4]+"/minute";
+} else {
+cell6.innerHTML="<div style='color:red'>"+x[4]+"/minute</div>";
+if(x[4]<20){
+prob+="Bradypnea, "
+}else{
+prob+="tachypnea, "
+}
+
+}
+cell7.innerHTML=prob;
+
+
+}
+
+
+
+</script>
+
+
+
+
+
+<script type="text/javascript">
+var hsh={};
+function employee() {
+document.getElementById("profile").src="http://"+document.getElementById("address").value+"/get_image/"+document.getElementById("username").value;
+var url=document.getElementById("address").value;
+url="http://"+url+"/employee/"+document.getElementById("username").value;
+var username="u"//document.getElementById("username").value;
+var pass="p"//document.getElementById("password").value;
+
+var fd = new FormData();
+ 
+  // These extra params aren't necessary but show that you can include other data.
+  fd.append("username", username);
+  fd.append("password", pass);
+  
+  
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  
+  xhr.upload.onprogress = function(e) {
+    if (e.lengthComputable) {
+      var percentComplete = (e.loaded / e.total) * 100;
+      console.log(percentComplete + '% uploaded');
+    }
+  };
+
+  xhr.onload = function() {
+    if (xhr.status == 200) {
+    
+    document.getElementById("second").style.display="block";
+    document.getElementById("third").style.display="block";
+    document.getElementById("first").style.display="none";
+    
+      var resp = xhr.responseText;
+      resp=JSON.parse(resp);
+    
+      var data=resp.data;
+      var previous=hsh.current;
+      hsh.current=resp.current_hash;
+      var received_previous=resp.previous_hash;
+      
+      var write_data={user_data:document.getElementById("userdata").value,id:document.getElementById("username").value,time:resp.time,data:resp.data,previous_hash:resp.previous_hash, current_hash:resp.current_hash};
+      writedata(document.getElementById("username").value,write_data);
+      
+      
+      var blockchain_log="Time: "+resp.time+"\r\nData: "+resp.data+"\r\nPrevious Hash: "+resp.previous_hash+"\r\nCurrent Hash: "+resp.current_hash;
+      document.getElementById("blockchain").value+=blockchain_log+"\r\n\n"
+      if((previous==received_previous) || (previous==undefined)){
+           
+      
+      
+          if(data) {
+          analys(data);
+          } else {
+          alert("Something went wrong");
+          }
+      }else{
+        alert("Hash Not Matching: "+previous+" "+received_previous);
+        return;
+        
+      }
+        };
+  };
+
+  xhr.send(fd);
+
+
+
+}
+
+</script>
+
+
+
+
+<script type="text/javascript">
+
+
+function refresh() {
+employee();
+var ref = setInterval(employee, 30000);
+
+
+}
+
+
+
+
+</script>
+
+</body>
